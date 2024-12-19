@@ -18,28 +18,38 @@ export default function Hero() {
     const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000)
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
 
-    renderer.setSize(300, 300)
+    // Increase canvas size dynamically
+    const size = Math.min(window.innerWidth * 0.6, 500) // 60% of screen width, max 500px
+    renderer.setSize(size, size)
     containerRef.current.appendChild(renderer.domElement)
 
-    const geometry = new THREE.TorusKnotGeometry(8, 1.5, 200, 32, 5, 6)
-    const material = new THREE.MeshPhongMaterial({
-      color: 0x6366f1,
-      shininess: 100,
-      emissive: 0x00,
-      specular: 0xff023,
+    const geometry = new THREE.TorusKnotGeometry(10, 2, 150, 20)
+    const material = new THREE.MeshStandardMaterial({
+      color: 0x4f46e5,
+      roughness: 0.8,
+      metalness:  1,
+      emissive: 0x232323,
       wireframe: true,
-      fog: true,
-      vertexColors: true,
+      fog:true,
+      roughnessMap:null,
+      vertexColors:true,
+      
+
+     
     })
     const torusKnot = new THREE.Mesh(geometry, material)
 
     scene.add(torusKnot)
 
-    const light = new THREE.PointLight(0xffffff, 1, 100)
-    light.position.set(0, 0, 10)
-    scene.add(light)
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6)
+    scene.add(ambientLight)
 
-    camera.position.z = 20
+    const pointLight = new THREE.PointLight(0xffffff, 1.5)
+    pointLight.position.set(10, 10, 10)
+    scene.add(pointLight)
+
+    camera.position.z = 50 // Adjusted for larger canvas
 
     const orbitControls = new OrbitControls(camera, renderer.domElement)
     orbitControls.enableZoom = false
@@ -57,11 +67,11 @@ export default function Hero() {
     const animate = () => {
       requestAnimationFrame(animate)
 
-      torusKnot.rotation.x += 0.005
-      torusKnot.rotation.y += 0.005
+      torusKnot.rotation.x += 0.01
+      torusKnot.rotation.y += 0.01
 
-      torusKnot.position.x = mouseX * 2
-      torusKnot.position.y = mouseY * 2
+      torusKnot.position.x = mouseX * 5
+      torusKnot.position.y = mouseY * 5
 
       renderer.render(scene, camera)
     }
@@ -69,14 +79,13 @@ export default function Hero() {
     animate()
 
     const handleResize = () => {
-      const size = Math.min(200, window.innerWidth - 40)
+      const newSize = Math.min(window.innerWidth * 0.6, 500)
       camera.aspect = 1
       camera.updateProjectionMatrix()
-      renderer.setSize(size, size)
+      renderer.setSize(newSize, newSize)
     }
 
     window.addEventListener('resize', handleResize)
-    handleResize()
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
@@ -94,7 +103,7 @@ export default function Hero() {
   }
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-gray-800 px-4 sm:px-6 lg:px-8">
+    <section className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-gray-800 px-6 sm:px-10 lg:px-20">
       <div className="text-center">
         <div className="mb-8 relative mx-auto h-40 w-40 overflow-hidden rounded-full bg-gray-700">
           <Image
@@ -142,7 +151,7 @@ export default function Hero() {
         <motion.div
           ref={containerRef}
           className="mt-8 mx-auto"
-          style={{ width: '200px', height: '200px' }}
+          style={{ width: '100%', maxWidth: '500px', height: 'auto', aspectRatio: '1 / 1' }}
           animate={controls}
           onMouseEnter={() => handleHover(true)}
           onMouseLeave={() => handleHover(false)}
