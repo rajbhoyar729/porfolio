@@ -11,7 +11,7 @@ export default function Background3D() {
     if (!containerRef.current) return
 
     const { scene, camera, renderer } = createScene()
-    const particles = createParticles(scene, 1000)
+    const particles = createParticles(scene, 10000000)
 
     containerRef.current.appendChild(renderer.domElement)
 
@@ -26,8 +26,8 @@ export default function Background3D() {
     const animate = () => {
       requestAnimationFrame(animate)
 
-      particles.rotation.x += 0.001
-      particles.rotation.y += 0.001
+      particles.rotation.x += 0.0001
+      particles.rotation.y += 0.0001
 
       renderer.render(scene, camera)
     }
@@ -44,7 +44,7 @@ export default function Background3D() {
     <motion.div
       ref={containerRef}
       className="fixed top-0 left-0 w-full h-full pointer-events-none"
-      initial={{ opacity: 0 }}
+      initial={{ opacity: 0}}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     />

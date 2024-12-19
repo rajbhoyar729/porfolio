@@ -21,12 +21,16 @@ export default function Hero() {
     renderer.setSize(300, 300)
     mountRef.current.appendChild(renderer.domElement)
 
-    const geometry = new THREE.TorusKnotGeometry(5, 1.5, 200, 32, 3, 4)
+    const geometry = new THREE.TorusKnotGeometry(8, 1.5, 200, 32, 5, 6)
     const material = new THREE.MeshPhongMaterial({
       color: 0x6366f1,
       shininess: 100,
-      specular: 0x6366f1,
+      emissive:0x00,
+      specular: 0xff023,
       wireframe: true,
+      fog:true,
+      vertexColors:true,
+      
     })
     const torusKnot = new THREE.Mesh(geometry, material)
 
