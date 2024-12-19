@@ -3,32 +3,39 @@
 import { useState } from 'react'
 import { Mail, Phone, Linkedin, Github } from 'lucide-react'
 
+// Define TypeScript types for form data and errors
+interface FormData {
+  name: string
+  email: string
+  message: string
+}
+
 export default function Contact() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
-    message: ''
+    message: '',
   })
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState<Partial<FormData>>({})
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }))
   }
 
   const validateForm = () => {
-    let errors = {}
-    if (!formData.name.trim()) errors.name = 'Name is required'
-    if (!formData.email.trim()) errors.email = 'Email is required'
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) errors.email = 'Email is invalid'
-    if (!formData.message.trim()) errors.message = 'Message is required'
-    return errors
+    const validationErrors: Partial<FormData> = {}
+    if (!formData.name.trim()) validationErrors.name = 'Name is required'
+    if (!formData.email.trim()) validationErrors.email = 'Email is required'
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) validationErrors.email = 'Email is invalid'
+    if (!formData.message.trim()) validationErrors.message = 'Message is required'
+    return validationErrors
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formErrors = validateForm()
     if (Object.keys(formErrors).length === 0) {
@@ -126,4 +133,3 @@ export default function Contact() {
     </section>
   )
 }
-
