@@ -1,46 +1,59 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, ChangeEvent, FormEvent } from 'react'
 import { Mail, Phone, Linkedin, Github } from 'lucide-react'
 
+// Define the FormData and Errors interfaces
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+interface Errors {
+  name?: string;
+  email?: string;
+  message?: string;
+}
+
 export default function Contact() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     message: ''
-  })
-  const [errors, setErrors] = useState({})
+  });
+  const [errors, setErrors] = useState<Errors>({});
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
       [name]: value
-    }))
-  }
+    }));
+  };
 
-  const validateForm = () => {
-    let errors = {}
-    if (!formData.name.trim()) errors.name = 'Name is required'
-    if (!formData.email.trim()) errors.email = 'Email is required'
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) errors.email = 'Email is invalid'
-    if (!formData.message.trim()) errors.message = 'Message is required'
-    return errors
-  }
+  const validateForm = (): Errors => {
+    let errors: Errors = {};
+    if (!formData.name.trim()) errors.name = 'Name is required';
+    if (!formData.email.trim()) errors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) errors.email = 'Email is invalid';
+    if (!formData.message.trim()) errors.message = 'Message is required';
+    return errors;
+  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const formErrors = validateForm()
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const formErrors = validateForm();
     if (Object.keys(formErrors).length === 0) {
       // Submit the form
-      console.log('Form submitted:', formData)
+      console.log('Form submitted:', formData);
       // Reset form after submission
-      setFormData({ name: '', email: '', message: '' })
-      setErrors({})
+      setFormData({ name: '', email: '', message: '' });
+      setErrors({});
     } else {
-      setErrors(formErrors)
+      setErrors(formErrors);
     }
-  }
+  };
 
   return (
     <section id="contact" className="py-16 md:py-20 bg-gradient-custom-light relative z-10">
@@ -126,4 +139,3 @@ export default function Contact() {
     </section>
   )
 }
-
