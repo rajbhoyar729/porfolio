@@ -3,39 +3,32 @@
 import { useState } from 'react'
 import { Mail, Phone, Linkedin, Github } from 'lucide-react'
 
-// Define TypeScript types for form data and errors
-interface FormData {
-  name: string
-  email: string
-  message: string
-}
-
 export default function Contact() {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: '',
+    message: ''
   })
-  const [errors, setErrors] = useState<Partial<FormData>>({})
+  const [errors, setErrors] = useState({})
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData((prevState) => ({
+    setFormData(prevState => ({
       ...prevState,
-      [name]: value,
+      [name]: value
     }))
   }
 
   const validateForm = () => {
-    const validationErrors: Partial<FormData> = {}
-    if (!formData.name.trim()) validationErrors.name = 'Name is required'
-    if (!formData.email.trim()) validationErrors.email = 'Email is required'
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) validationErrors.email = 'Email is invalid'
-    if (!formData.message.trim()) validationErrors.message = 'Message is required'
-    return validationErrors
+    let errors = {}
+    if (!formData.name.trim()) errors.name = 'Name is required'
+    if (!formData.email.trim()) errors.email = 'Email is required'
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) errors.email = 'Email is invalid'
+    if (!formData.message.trim()) errors.message = 'Message is required'
+    return errors
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     const formErrors = validateForm()
     if (Object.keys(formErrors).length === 0) {
@@ -50,10 +43,10 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-gray-900">
+    <section id="contact" className="py-16 md:py-20 bg-gradient-custom-light relative z-10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold mb-8 text-center">Get in Touch</h2>
-        <div className="grid md:grid-cols-2 gap-12">
+        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center text-white">Get in Touch</h2>
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12">
           <div>
             <p className="text-gray-300 mb-6">
               I'm always open to new opportunities and collaborations. Feel free to reach out!
@@ -95,7 +88,7 @@ export default function Contact() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-blue-900 border border-blue-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
               </div>
@@ -107,7 +100,7 @@ export default function Contact() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-blue-900 border border-blue-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
               </div>
@@ -119,7 +112,7 @@ export default function Contact() {
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-blue-900 border border-blue-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 ></textarea>
                 {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
               </div>
@@ -133,3 +126,4 @@ export default function Contact() {
     </section>
   )
 }
+
