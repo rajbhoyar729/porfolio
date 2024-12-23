@@ -1,20 +1,26 @@
+import Section from './Section'
+
 export default function Experience() {
   return (
-    <section id="experience" className="py-20 bg-gray-900">
+    <Section id="experience" className="bg-gradient-custom-light">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold mb-8 text-center">Experience</h2>
-        <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
-          <h3 className="text-2xl font-semibold mb-2">Software Development Intern</h3>
+        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center text-white">Professional Experience</h2>
+        <div className="bg-blue-900 rounded-lg p-6 shadow-lg">
+          <h3 className="text-xl md:text-2xl font-semibold mb-2 text-white">Software Development Intern</h3>
           <p className="text-gray-300 mb-2">BlueKei Solutions, Pune (Hybrid)</p>
           <p className="text-gray-400 mb-4">Feb 2024 – May 2024</p>
           <ul className="list-disc list-inside text-gray-300 space-y-2">
-            <li>Reduced database query execution time by 60% through an ORM abstraction layer for Neo4j.</li>
-            <li>Developed a role-based web application enabling efficient CRUD operations for over 250 data nodes, enhancing system usability by 70%.</li>
-            <li>Automated query management using dynamic dropdowns, improving process efficiency by 50%.</li>
+            <li>Designed and implemented a distributed Node.js microservice architecture, improving system efficiency by 60%.</li>
+            <li>Built and optimized a scalable data processing pipeline using Python, enhancing data processing speed by 70%.</li>
+            <li>Developed a real-time monitoring solution using React.js and Socket.IO, reducing incident response time by 40%.</li>
+            <li>Participated in design reviews with peers and stakeholders to decide among available technologies.</li>
+            <li>Conducted code reviews for other developers, ensuring adherence to best practices and style guidelines.</li>
+            <li>Contributed to existing documentation and adapted content based on product updates and user feedback.</li>
+            <li>Triaged system issues and resolved bugs by analyzing their impact on service operations and quality.</li>
           </ul>
         </div>
       </div>
-    </section>
+    </Section>
   )
 }
 

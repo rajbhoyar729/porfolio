@@ -2,6 +2,10 @@
 
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 export default function Background3D() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -22,69 +26,135 @@ export default function Background3D() {
     updateSize()
     containerRef.current.appendChild(renderer.domElement)
 
-    const geometry = new THREE.BufferGeometry()
-    const vertices = []
-    const colors = []
+    // Create torus knot with enhanced material
+    const geometry = new THREE.TorusKnotGeometry(10, 3, 200, 32, 3, 4)
+    const material = new THREE.MeshPhysicalMaterial({
+      color: 0x3b82f6,
+      metalness: 0.7,
+      roughness: 0.2,
+      wireframe: true,
+      emissive: 0x3b82f6,
+      emissiveIntensity: 0.2,
+    })
+    const torusKnot = new THREE.Mesh(geometry, material)
+    scene.add(torusKnot)
 
-    for (let i = 0; i < 5000; i++) {
-      const x = (Math.random() - 0.5) * 2000
-      const y = (Math.random() - 0.5) * 2000
-      const z = (Math.random() - 0.5) * 2000
-      vertices.push(x, y, z)
+    // Create snowfall particles
+    const snowGeometry = new THREE.BufferGeometry()
+    const snowCount = 5000
+    const posArray = new Float32Array(snowCount * 3)
+    const scaleArray = new Float32Array(snowCount)
 
-      const color = new THREE.Color()
-      color.setHSL(Math.random(), 0.7, 0.5)
-      colors.push(color.r, color.g, color.b)
+    for(let i = 0; i < snowCount * 3; i += 3) {
+      posArray[i] = (Math.random() - 0.5) * 2000
+      posArray[i + 1] = (Math.random() - 0.5) * 2000
+      posArray[i + 2] = (Math.random() - 0.5) * 2000
+      scaleArray[i / 3] = Math.random()
     }
 
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3))
-    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3))
+    snowGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3))
+    snowGeometry.setAttribute('scale', new THREE.BufferAttribute(scaleArray, 1))
 
-    const material = new THREE.PointsMaterial({ 
-      size: 3, 
-      vertexColors: true, 
-      blending: THREE.AdditiveBlending,
+    const snowMaterial = new THREE.PointsMaterial({
+      size: 2,
+      color: 0xffffff,
       transparent: true,
-      opacity: 0.6
+      opacity: 0.6,
+      blending: THREE.AdditiveBlending,
     })
-    const points = new THREE.Points(geometry, material)
-    scene.add(points)
 
-    camera.position.z = 1000
+    const snow = new THREE.Points(snowGeometry, snowMaterial)
+    scene.add(snow)
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+    scene.add(ambientLight)
+
+    const pointLight = new THREE.PointLight(0x3b82f6, 2)
+    pointLight.position.set(20, 20, 20)
+    scene.add(pointLight)
+
+    camera.position.z = 50
 
     let mouseX = 0
     let mouseY = 0
+    let targetRotationSpeed = 0.001
+    let currentRotationSpeed = 0.001
 
     const handleMouseMove = (event: MouseEvent) => {
       mouseX = (event.clientX - window.innerWidth / 2) / 100
       mouseY = (event.clientY - window.innerHeight / 2) / 100
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
+    // GSAP Scroll Trigger for rotation speed
+    ScrollTrigger.create({
+      trigger: 'body',
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: (self) => {
+        targetRotationSpeed = 0.001 + (self.progress * 0.01)
+        // Scale torus knot based on scroll
+        torusKnot.scale.setScalar(1 + self.progress * 0.3)
+        // Adjust emission intensity based on scroll
+        material.emissiveIntensity = 0.2 + self.progress * 0.8
+      }
+    })
 
     const animate = () => {
       requestAnimationFrame(animate)
 
-      points.rotation.x += 0.0005
-      points.rotation.y += 0.0005
+      // Smooth rotation speed interpolation
+      currentRotationSpeed += (targetRotationSpeed - currentRotationSpeed) * 0.05
 
+      torusKnot.rotation.x += currentRotationSpeed
+      torusKnot.rotation.y += currentRotationSpeed
+
+      // Animate snow particles
+      const positions = snow.geometry.attributes.position.array as Float32Array
+      const scales = snow.geometry.attributes.scale.array as Float32Array
+      
+      for(let i = 0; i < snowCount * 3; i += 3) {
+        positions[i + 1] -= (0.1 + scales[i / 3] * 0.5)
+        if(positions[i + 1] < -1000) {
+          positions[i + 1] = 1000
+        }
+      }
+      snow.geometry.attributes.position.needsUpdate = true
+
+      // Rotate snow based on mouse
+      snow.rotation.x += 0.0001
+      snow.rotation.y += 0.0001
+
+      // Camera movement
       camera.position.x += (mouseX - camera.position.x) * 0.05
       camera.position.y += (-mouseY - camera.position.y) * 0.05
+      camera.lookAt(scene.position)
 
       renderer.render(scene, camera)
     }
 
     animate()
 
+    window.addEventListener('mousemove', handleMouseMove)
     window.addEventListener('resize', updateSize)
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('resize', updateSize)
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
       containerRef.current?.removeChild(renderer.domElement)
     }
   }, [])
 
-  return <div ref={containerRef} className="fixed top-0 left-0 w-full h-full pointer-events-none opacity-30" style={{ zIndex: -1 }} />
+  return (
+    <div 
+      ref={containerRef} 
+      className="fixed top-0 left-0 w-full h-full pointer-events-none" 
+      style={{ 
+        zIndex: -1,
+        opacity: 0.8
+      }} 
+    />
+  )
 }
 

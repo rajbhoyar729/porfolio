@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,6 +17,7 @@ body {
     rgb(var(--background-end-rgb))
   );
   min-height: 100vh;
+  font-family: 'Inter', sans-serif;
 }
 
 html {
@@ -34,5 +36,86 @@ html {
 
 .bg-gradient-custom-light {
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.8) 0%, rgba(99, 102, 241, 0.8) 100%);
+}
+
+/* Improved spacing and alignment */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+section {
+  padding: 5rem 0;
+}
+
+/* Enhanced typography */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.025em;
+}
+
+/* Smooth transitions */
+a, button {
+  transition: all 0.3s ease;
+}
+
+/* Improved form styling */
+input, textarea {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+/* Hover effects */
+.hover-lift {
+  transition: transform 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+}
+
+/* Improved button styling */
+.btn {
+  @apply font-bold py-2 px-4 rounded-full transition-colors duration-300;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white hover:bg-blue-700;
+}
+
+.btn-secondary {
+  @apply bg-indigo-600 text-white hover:bg-indigo-700;
+}
+
+/* Improved card styling */
+.card {
+  @apply bg-white rounded-lg shadow-lg overflow-hidden transition-shadow duration-300;
+}
+
+.card:hover {
+  @apply shadow-xl;
+}
+
+/* Animated background */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-bg {
+  background: linear-gradient(270deg, #0a192f, #172a45, #303C55);
+  background-size: 600% 600%;
+  animation: gradientAnimation 15s ease infinite;
 }
 

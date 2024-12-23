@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Download } from 'lucide-react'
 
 const navItems = [
   { name: 'About', href: '#about' },
@@ -47,6 +47,7 @@ export default function Header() {
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
+        
       </nav>
       {mobileMenuOpen && (
         <div className="md:hidden bg-blue-900 bg-opacity-90 backdrop-blur-sm">
