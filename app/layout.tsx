@@ -1,6 +1,7 @@
 'use client'
 import './globals.css'
 import { Inter } from 'next/font/google'
+import { metadata } from './metadata'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Background3D from './components/Background3D'
@@ -10,10 +11,7 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata = {
-  title: 'Raj Bhoyar - Portfolio',
-  description: 'B.Tech in Computer Science with a passion for building scalable software systems and applying advanced AI/ML technologies.',
-}
+
 
 export default function RootLayout({
   children,
