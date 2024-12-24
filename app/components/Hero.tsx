@@ -64,7 +64,7 @@ export default function Hero() {
       <div className="text-center relative z-10">
         <div ref={imageRef} className="mb-8 relative mx-auto h-32 w-32 sm:h-40 sm:w-40 overflow-hidden rounded-full bg-gradient-custom-light p-1">
           <Image
-            src="/raj_pro.png"
+            src="/raj_pro.jpg"
             alt="Raj Bhoyar"
             layout="fill"
             objectFit="cover"
