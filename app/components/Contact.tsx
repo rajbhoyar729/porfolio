@@ -134,13 +134,13 @@ export default function Contact() {
               </div>
               <div className="flex items-center">
                 <Linkedin className="w-6 h-6 mr-4 text-blue-400" />
-                <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
+                <a href="https://www.linkedin.com/in/raj-bhoyar-b597b416a" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
                   LinkedIn
                 </a>
               </div>
               <div className="flex items-center">
                 <Github className="w-6 h-6 mr-4 text-blue-400" />
-                <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
+                <a href="https://github.com/rajbhoyar729" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
                   GitHub
                 </a>
               </div>
