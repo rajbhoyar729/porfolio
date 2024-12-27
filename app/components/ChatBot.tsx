@@ -79,7 +79,7 @@ export default function ChatBot() {
                   }`}
                 >
                   <span
-                    className={`inline-block p-2 rounded-lg ${
+                    className={`inline-block p-2 rounded-lg text-black ${
                       msg.role === 'user' ? 'bg-blue-100 bg-opacity-80' : 'bg-gray-100 bg-opacity-80'
                     }`}
                   >
@@ -89,7 +89,7 @@ export default function ChatBot() {
               ))}
               {isLoading && (
                 <div className="text-center">
-                  <span className="inline-block p-2 rounded-lg bg-gray-100 bg-opacity-80">
+                  <span className="inline-block p-2 rounded-lg bg-gray-100 bg-opacity-80 text-black">
                     Thinking...
                   </span>
                 </div>
@@ -104,7 +104,7 @@ export default function ChatBot() {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder="Type your message..."
-                  className="flex-1 p-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="flex-1 p-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-black"
                 />
                 <button
                   onClick={handleSendMessage}
