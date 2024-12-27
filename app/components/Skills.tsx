@@ -3,17 +3,15 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { FaPython, FaJava, FaJs, FaReact, FaNodeJs, FaAws, FaDocker, FaGitAlt, FaCode, FaServer } from 'react-icons/fa'
-import { SiExpress, SiDjango, SiFlask, SiGraphql, SiMongodb, SiRedis, SiSocketdotio,SiGithub, SiTensorflow } from 'react-icons/si'
-import { GrTest } from 'react-icons/gr'
-import { AiOutlineCloud } from 'react-icons/ai'
+import { FaPython, FaJava, FaJs, FaReact, FaNodeJs, FaAws, FaDocker, FaGitAlt, FaCode, FaServer, FaCloud } from 'react-icons/fa'
+import { SiExpress, SiDjango, SiFlask, SiGraphql, SiMongodb, SiRedis, SiSocketdotio, SiTensorflow } from 'react-icons/si'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const skills = [
   { name: 'Python', icon: FaPython },
   { name: 'JavaScript (ES6+)', icon: FaJs },
-  { name: 'Next.Js', icon: FaReact },
+  { name: 'Java', icon: FaJava },
   { name: 'C', icon: FaCode },
   { name: 'C++', icon: FaCode },
   { name: 'Node.js', icon: FaNodeJs },
@@ -25,7 +23,7 @@ const skills = [
   { name: 'RESTful APIs', icon: FaServer },
   { name: 'AWS', icon: FaAws },
   { name: 'Git', icon: FaGitAlt },
-  { name: 'GitHub', icon: SiGithub },
+  { name: 'GitHub', icon: FaGitAlt },
   { name: 'Agile Methodologies', icon: FaCode },
   { name: 'Distributed Systems', icon: FaServer },
   { name: 'Microservices', icon: FaServer },
@@ -33,8 +31,8 @@ const skills = [
   { name: 'Redis', icon: SiRedis },
   { name: 'Socket.IO', icon: SiSocketdotio },
   { name: 'TensorFlow', icon: SiTensorflow },
-  { name: 'Testing (Pytest)', icon: GrTest },
-  { name: 'Cloud Computing', icon: AiOutlineCloud },
+  { name: 'Testing (Pytest)', icon: FaCode },
+  { name: 'Cloud Computing', icon: FaCloud },
 ]
 
 export default function Skills() {
