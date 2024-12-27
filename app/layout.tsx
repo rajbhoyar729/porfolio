@@ -34,12 +34,12 @@ export default function RootLayout({
     }
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', handleAnchorClick)
+      anchor.addEventListener('click', (e) => handleAnchorClick(e as unknown as MouseEvent))
     })
 
     return () => {
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.removeEventListener('click', handleAnchorClick)
+        anchor.removeEventListener('click', (e) => handleAnchorClick(e as unknown as MouseEvent))
       })
     }
   }, [])
