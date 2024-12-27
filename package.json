@@ -12,7 +12,7 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "@google/generative-ai": "^1.0.0",
+    "@google/generative-ai": "^0.1.0",
     "framer-motion": "^5.0.0",
     "lucide-react": "^0.2.0"
   },
