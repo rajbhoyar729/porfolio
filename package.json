@@ -14,7 +14,7 @@
     "react-dom": "latest",
     "@google/generative-ai": "^0.1.0",
     "framer-motion": "^5.0.0",
-    "lucide-react": "^0.1.0"
+    "lucide-react": "^0.162.0"
   },
   "devDependencies": {
     "typescript": "^4.5.2",
