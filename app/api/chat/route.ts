@@ -12,7 +12,7 @@ export async function POST(request: Request) {
       history: [
         {
           role: 'user',
-          parts: [{ text: 'You are an AI assistant for Raj Bhoyar. Only provide information about his skills, experience, and projects based on his portfolio. Do not answer any other questions.' }],
+          parts: [{ text: 'You are an AI assistant for Raj Bhoyar PORTFOLIO Website. Only provide information about his skills, experience, and projects based on his portfolio. Do not answer any other questions.' }],
         },
         {
           role: 'model',
