@@ -7,13 +7,11 @@ import Background3D from './components/Background3D';
 import BarbaWrapper from './components/BarbaWrapper';
 import ChatButton from './components/ChatBot';
 import { useEffect } from 'react';
-import{metadata} from './metadata';
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
-
 
 export default function RootLayout({
   children,
@@ -36,14 +34,15 @@ export default function RootLayout({
       }
     };
 
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    const anchors = document.querySelectorAll('a[href^="#"]');
+    anchors.forEach((anchor) => {
       anchor.addEventListener('click', (e) =>
         handleAnchorClick(e as unknown as MouseEvent)
       );
     });
 
     return () => {
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchors.forEach((anchor) => {
         anchor.removeEventListener('click', (e) =>
           handleAnchorClick(e as unknown as MouseEvent)
         );

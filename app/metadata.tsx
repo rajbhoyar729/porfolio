@@ -1,4 +1,19 @@
-export const metadata = { 
-    title: 'Raj Bhoyar - Portfolio',
-     description: 'B.Tech in Computer Science with a passion for building scalable software systems and applying advanced AI/ML technologies.', 
-    }
+// app/layout.tsx (Server Component)
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'My Website',
+  description: 'Welcome to my website!',
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
