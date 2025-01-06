@@ -5,7 +5,7 @@ export default function Experience() {
     <Section id="experience" className="bg-gradient-custom-light">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center text-white">Professional Experience</h2>
-        <div className="bg-blue-900 rounded-lg p-6 shadow-lg">
+        <div className="bg-blue-950 rounded-2xl p-6 shadow-lg">
           <h3 className="text-xl md:text-2xl font-semibold mb-2 text-white">Software Development Intern</h3>
           <p className="text-gray-300 mb-2">BlueKei Solutions, Pune (Hybrid)</p>
           <p className="text-gray-400 mb-4">Feb 2024 – May 2024</p>

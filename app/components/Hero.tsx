@@ -2,8 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 import { Download } from 'lucide-react'
 
 export default function Hero() {
@@ -37,22 +36,15 @@ export default function Hero() {
       ease: 'back.out(1.7)',
     })
 
-    // Hover animation for resume button
-    resumeButtonRef.current.addEventListener('mouseenter', () => {
-      gsap.to(resumeButtonRef.current, {
-        scale: 1.1,
-        duration: 0.3,
-        ease: 'power2.out',
-      })
-    })
-
-    resumeButtonRef.current.addEventListener('mouseleave', () => {
-      gsap.to(resumeButtonRef.current, {
-        scale: 1,
-        duration: 0.3,
-        ease: 'power2.out',
-      })
-    })
+    // Parallax effect
+    gsap.to(imageRef.current, {
+      yPercent: -20,
+      ease: "none",
+      scrollTrigger: {
+        trigger: heroRef.current,
+        scrub: true
+      }, 
+    });
 
     return () => {
       tl.kill()
@@ -60,9 +52,9 @@ export default function Hero() {
   }, [])
 
   return (
-    <section ref={heroRef} className="min-h-screen flex flex-col items-center justify-center bg-gradient-custom px-4 sm:px-6 lg:px-8 pt-16 relative overflow-hidden">
+    <section id="hero" ref={heroRef} className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 relative overflow-hidden">
       <div className="text-center relative z-10">
-        <div ref={imageRef} className="mb-8 relative mx-auto h-32 w-32 sm:h-40 sm:w-40 overflow-hidden rounded-full bg-gradient-custom-light p-1">
+        <div ref={imageRef} className="mb-8 relative mx-auto h-32 w-32 sm:h-40 sm:w-40 overflow-hidden rounded-full bg-gradient-to-r from-red-700 to-red-900 p-1">
           <Image
             src="/raj_pro.jpg"
             alt="Raj Bhoyar"
@@ -72,22 +64,22 @@ export default function Hero() {
           />
         </div>
         <div ref={contentRef}>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-red-600">
             Raj Bhoyar
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-8">
             B.Tech in Computer Science with a passion for building scalable software systems and applying advanced AI/ML technologies.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="#contact"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full transition-colors w-full sm:w-auto transform hover:scale-105"
+              className="bg-gradient-to-r from-red-700 to-red-900 text-white font-bold py-2 px-6 rounded-full transition-all duration-300 hover:from-red-800 hover:to-red-950 hover:shadow-lg transform hover:scale-105"
             >
               Get in Touch
             </a>
             <a
               href="#projects"
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-full transition-colors w-full sm:w-auto transform hover:scale-105"
+              className="bg-gradient-to-r from-gray-700 to-gray-900 text-white font-bold py-2 px-6 rounded-full transition-all duration-300 hover:from-gray-800 hover:to-gray-950 hover:shadow-lg transform hover:scale-105"
             >
               View Projects
             </a>
@@ -95,9 +87,9 @@ export default function Hero() {
         </div>
         <a
           ref={resumeButtonRef}
-          href="/rajbhoyar.pdf"
+          href="/path-to-your-resume.pdf"
           download
-          className="mt-8 inline-flex items-center px-3 py-1 text-sm bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors duration-300"
+          className="mt-8 inline-flex items-center px-3 py-1 text-sm bg-gradient-to-r from-red-600 to-red-800 text-white rounded-full hover:from-red-700 hover:to-red-900 transition-all duration-300 transform hover:scale-105"
         >
           <Download size={14} className="mr-1" />
           Resume

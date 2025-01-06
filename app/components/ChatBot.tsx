@@ -1,29 +1,39 @@
 'use client'
 
-import React from 'react'
 import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { MessageSquare, X, Send } from 'lucide-react'
+import { MessageSquare, X, Loader } from 'lucide-react'
 
-export default function ChatBot() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [messages, setMessages] = useState<{ role: 'user' | 'bot'; content: string }[]>([])
+export default function ChatButton() {
+  const [isVisible, setIsVisible] = useState(true)
+  const [isChatOpen, setIsChatOpen] = useState(false)
+  const [messages, setMessages] = useState<{ role: string; content: string }[]>([])
   const [input, setInput] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
   const chatRef = useRef<HTMLDivElement>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (chatRef.current) {
-      chatRef.current.scrollTop = chatRef.current.scrollHeight
+    const handleScroll = () => {
+      const heroSection = document.getElementById('hero')
+      if (heroSection) {
+        const heroBottom = heroSection.getBoundingClientRect().bottom
+        setIsVisible(heroBottom > 0)
+      }
     }
-  }, [messages])
 
-  const handleSendMessage = async () => {
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
     if (!input.trim()) return
 
-    setMessages(prev => [...prev, { role: 'user', content: input }])
-    setInput('')
     setIsLoading(true)
+    setError(null)
+    const newMessage = { role: 'user', content: input }
+    setMessages(prev => [...prev, newMessage])
+    setInput('')
 
     try {
       const response = await fetch('/api/chat', {
@@ -32,93 +42,90 @@ export default function ChatBot() {
         body: JSON.stringify({ message: input }),
       })
 
-      if (!response.ok) throw new Error('Failed to get response')
-
       const data = await response.json()
-      setMessages(prev => [...prev, { role: 'bot', content: data.response }])
+
+      if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error(data.details || 'Too many requests. Please wait a moment before trying again.')
+        }
+        throw new Error(data.error || 'Failed to get response')
+      }
+
+      setMessages(prev => [...prev, { role: 'assistant', content: data.response }])
     } catch (error) {
       console.error('Error:', error)
-      setMessages(prev => [...prev, { role: 'bot', content: 'Sorry, I encountered an error. Please try again.' }])
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred'
+      setError(errorMessage)
+      setMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: errorMessage
+      }])
     } finally {
       setIsLoading(false)
     }
   }
 
-  return (
-    <>
-      <motion.button
-        className="fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full shadow-lg"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={() => setIsOpen(true)}
-      >
-        <MessageSquare size={24} />
-      </motion.button>
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight
+    }
+  }, [messages])
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            className="fixed bottom-4 right-4 w-96 h-[500px] bg-gray-900 bg-opacity-80 backdrop-blur-lg rounded-lg shadow-xl overflow-hidden flex flex-col"
-          >
-            <div className="bg-blue-600 bg-opacity-80 text-white p-4 flex justify-between items-center">
-              <h3 className="text-lg font-semibold">Chat with Raj's AI Assistant</h3>
-              <button onClick={() => setIsOpen(false)}>
-                <X size={24} />
+  if (!isVisible && !isChatOpen) return null
+
+  return (
+    <div className="fixed bottom-4 right-4 z-50">
+      {!isChatOpen && (
+        <button
+          onClick={() => setIsChatOpen(true)}
+          className="bg-red-700 text-white rounded-full p-3 shadow-lg hover:bg-red-800 transition-colors duration-300"
+          aria-label="Open chat"
+        >
+          <MessageSquare size={24} />
+        </button>
+      )}
+      {isChatOpen && (
+        <div className="bg-gray-900 rounded-lg shadow-xl w-80 sm:w-96 h-96 flex flex-col">
+          <div className="flex justify-between items-center p-4 border-b border-gray-700">
+            <h3 className="text-white font-semibold">Chat with AI</h3>
+            <button onClick={() => setIsChatOpen(false)} className="text-gray-400 hover:text-white" aria-label="Close chat">
+              <X size={20} />
+            </button>
+          </div>
+          <div ref={chatRef} className="flex-1 overflow-y-auto p-4 space-y-4">
+            {messages.map((msg, index) => (
+              <div key={index} className={`${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
+                <span className={`inline-block p-2 rounded-lg ${msg.role === 'user' ? 'bg-red-700 text-white' : 'bg-gray-700 text-white'}`}>
+                  {msg.content}
+                </span>
+              </div>
+            ))}
+            {error && (
+              <div className="text-red-500 text-center text-sm">{error}</div>
+            )}
+          </div>
+          <form onSubmit={handleSubmit} className="p-4 border-t border-gray-700">
+            <div className="flex space-x-2">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type your message..."
+                disabled={isLoading}
+                className="flex-1 bg-gray-800 text-white rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50"
+              />
+              <button 
+                type="submit" 
+                disabled={isLoading}
+                className="bg-red-700 text-white rounded-full px-4 py-2 hover:bg-red-800 transition-colors duration-300 disabled:opacity-50"
+              >
+                {isLoading ? <Loader className="w-5 h-5 animate-spin" /> : 'Send'}
               </button>
             </div>
-
-            <div ref={chatRef} className="flex-1 overflow-y-auto p-4 space-y-4">
-              {messages.map((msg, index) => (
-                <div
-                  key={index}
-                  className={`${
-                    msg.role === 'user' ? 'text-right' : 'text-left'
-                  }`}
-                >
-                  <span
-                    className={`inline-block p-2 rounded-lg text-black ${
-                      msg.role === 'user' ? 'bg-blue-100 bg-opacity-80' : 'bg-gray-100 bg-opacity-80'
-                    }`}
-                  >
-                    {msg.content}
-                  </span>
-                </div>
-              ))}
-              {isLoading && (
-                <div className="text-center">
-                  <span className="inline-block p-2 rounded-lg bg-gray-100 bg-opacity-80 text-black">
-                    Thinking...
-                  </span>
-                </div>
-              )}
-            </div>
-
-            <div className="p-4 border-t border-gray-200">
-              <div className="flex items-center">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                  placeholder="Type your message..."
-                  className="flex-1 p-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-black"
-                />
-                <button
-                  onClick={handleSendMessage}
-                  disabled={isLoading}
-                  className="bg-blue-600 text-white p-2 rounded-r-lg hover:bg-blue-700 transition-colors"
-                >
-                  <Send size={20} />
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+          </form>
+        </div>
+      )}
+    </div>
   )
 }
 

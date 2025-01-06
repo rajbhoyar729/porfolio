@@ -1,10 +1,12 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { FaPython, FaJava, FaJs, FaReact, FaNodeJs, FaAws, FaDocker, FaGitAlt, FaCode, FaServer, FaCloud } from 'react-icons/fa'
+import { FaPython, FaJava, FaJs, FaReact, FaNodeJs, FaAws, FaDocker, FaGitAlt, FaCode, FaServer } from 'react-icons/fa'
 import { SiExpress, SiDjango, SiFlask, SiGraphql, SiMongodb, SiRedis, SiSocketdotio, SiTensorflow } from 'react-icons/si'
+import { GrTest } from 'react-icons/gr'
+import { AiOutlineCloud } from 'react-icons/ai'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -24,15 +26,12 @@ const skills = [
   { name: 'AWS', icon: FaAws },
   { name: 'Git', icon: FaGitAlt },
   { name: 'GitHub', icon: FaGitAlt },
-  { name: 'Agile Methodologies', icon: FaCode },
-  { name: 'Distributed Systems', icon: FaServer },
   { name: 'Microservices', icon: FaServer },
   { name: 'MongoDB', icon: SiMongodb },
   { name: 'Redis', icon: SiRedis },
   { name: 'Socket.IO', icon: SiSocketdotio },
   { name: 'TensorFlow', icon: SiTensorflow },
-  { name: 'Testing (Pytest)', icon: FaCode },
-  { name: 'Cloud Computing', icon: FaCloud },
+  { name: 'Cloud Computing', icon: AiOutlineCloud },
 ]
 
 export default function Skills() {
@@ -63,13 +62,13 @@ export default function Skills() {
   }, [])
 
   return (
-    <section id="skills" className="py-20 bg-gradient-custom">
+    <section id="skills" className="py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-white">Technical Skills</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-white bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">Technical Skills</h2>
         <div ref={skillsRef} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
           {skills.map((skill, index) => (
             <div key={index} className="skill-item flex flex-col items-center">
-              <div className="text-4xl mb-3 text-blue-400">
+              <div className="text-4xl mb-3 text-white bg-gradient-to-r from-purple-400 to-pink-600 p-3 rounded-full">
                 <skill.icon />
               </div>
               <span className="text-sm font-medium text-gray-300 text-center">{skill.name}</span>
@@ -78,6 +77,6 @@ export default function Skills() {
         </div>
       </div>
     </section>
-  )
-}
 
+  )       
+}

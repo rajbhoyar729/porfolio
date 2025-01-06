@@ -1,106 +1,122 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 17, 24, 39;
-  --background-end-rgb: 30, 58, 138;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 139, 0, 0;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-    135deg,
-    rgb(var(--background-start-rgb)),
-    rgb(var(--background-end-rgb))
-  );
-  min-height: 100vh;
-  font-family: 'Inter', sans-serif;
-}
+@layer base {
+  body {
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
+      135deg,
+      rgb(var(--background-start-rgb)),
+      rgb(var(--background-end-rgb))
+    );
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+  }
 
-html {
-  scroll-behavior: smooth;
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+
+  .bg-gradient-custom {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(139, 0, 0, 0.421) 100%);
+  }
+
+  .bg-gradient-custom-light {
+    background: linear-gradient(135deg, rgba(29, 0, 0, 0.849) 50%, rgba(255, 0, 0, 0.474) 50%);
+  }
+  .bg-gradient-custom-light-back {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.614) 50%, rgba(255, 68, 68, 0.504) 50%);
+
+  }
+
+  .bg-gradient-header {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.614) 50%, rgba(255, 68, 68, 0.504) 50%);
+  }
+  .hover-lift {
+    transition: transform 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-5px);
+  }
+
+  .glassmorphism {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .neon-text {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff0000, 0 0 35px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000, 0 0 75px #ff0000;
+  }
+
+  .text-responsive {
+    font-size: clamp(14px, calc(14px + 12 * (100vw - 300px) / 1300), 26px);
+  }
 }
 
-.bg-gradient-custom {
-  background: linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(30, 58, 138, 0.8) 100%);
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  section {
+    @apply py-20;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+  }
+
+  a, button {
+    @apply transition-all duration-300;
+  }
+
+  input, textarea {
+    @apply transition-all duration-300;
+  }
+
+  input:focus, textarea:focus {
+    @apply border-red-500 ring-2 ring-red-500 ring-opacity-50;
+  }
+
+  .btn {
+    @apply font-bold py-2 px-4 rounded-full transition-colors duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-red-700 to-red-900 text-white hover:from-red-800 hover:to-red-950;
+  }
+
+  .btn-secondary {
+    @apply bg-gradient-to-r from-gray-700 to-gray-900 text-white hover:from-gray-800 hover:to-gray-950;
+  }
+
+  .card {
+    @apply bg-black bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg overflow-hidden transition-shadow duration-300;
+  }
+
+  .card:hover {
+    @apply shadow-xl;
+  }
 }
 
-.bg-gradient-custom-light {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.8) 0%, rgba(99, 102, 241, 0.8) 100%);
-}
-
-/* Improved spacing and alignment */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-section {
-  padding: 5rem 0;
-}
-
-/* Enhanced typography */
-h1, h2, h3, h4, h5, h6 {
-  letter-spacing: -0.025em;
-}
-
-/* Smooth transitions */
-a, button {
-  transition: all 0.3s ease;
-}
-
-/* Improved form styling */
-input, textarea {
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-input:focus, textarea:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-}
-
-/* Hover effects */
-.hover-lift {
-  transition: transform 0.3s ease;
-}
-
-.hover-lift:hover {
-  transform: translateY(-5px);
-}
-
-/* Improved button styling */
-.btn {
-  @apply font-bold py-2 px-4 rounded-full transition-colors duration-300;
-}
-
-.btn-primary {
-  @apply bg-blue-600 text-white hover:bg-blue-700;
-}
-
-.btn-secondary {
-  @apply bg-indigo-600 text-white hover:bg-indigo-700;
-}
-
-/* Improved card styling */
-.card {
-  @apply bg-white rounded-lg shadow-lg overflow-hidden transition-shadow duration-300;
-}
-
-.card:hover {
-  @apply shadow-xl;
-}
-
-/* Animated background */
 @keyframes gradientAnimation {
   0% {
     background-position: 0% 50%;
@@ -110,12 +126,103 @@ input:focus, textarea:focus {
   }
   100% {
     background-position: 0% 50%;
+  }}
+
+.animated-bg {
+  background: linear-gradient(270deg, #000000, #7d0000, #FF0000);
+  background-size: 600% 600%;
+  animation: gradientAnimation 15s ease infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8b000082;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff00005b;
+}
+
+/* Accessibility improvements */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Improved focus styles for better keyboard navigation */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus {
+  outline: 2px solid #FF0000;
+  outline-offset: 2px;
+}
+
+/* Ensure sufficient color contrast */
+.text-gray-300 {
+  color: #D1D5DB;
+}
+
+.text-gray-400 {
+  color: #9CA3AF;
+}
+
+/* Responsive font sizes for improved readability */
+@media (max-width: 640px) {
+  body {
+    font-size: 16px;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.5rem;
   }
 }
 
-.animated-bg {
-  background: linear-gradient(270deg, #0a192f, #172a45, #303C55);
-  background-size: 600% 600%;
-  animation: gradientAnimation 15s ease infinite;
+/* Simplify layout for mobile devices */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Improve clarity with subtle shadows */
+.card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Consistency in interactive elements */
+.btn,
+.input,
+.card {
+  border-radius: 0.375rem;
+}
+
+/* User-centric hover effects */
+.btn:hover,
+.card:hover {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease-in-out;
 }
 

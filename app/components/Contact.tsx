@@ -111,7 +111,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-gradient-custom-light">
+    <section id="contact" className="py-20 bg-gradient-custom-light-back">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-white">Get in Touch</h2>
         <div className="grid md:grid-cols-2 gap-8 md:gap-12">

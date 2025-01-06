@@ -1,59 +1,75 @@
-'use client'
-import './globals.css'
-import { Inter } from 'next/font/google'
-import { metadata } from './metadata'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Background3D from './components/Background3D'
-import { useEffect } from 'react'
-import { gsap } from 'gsap'
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
+'use client'; // Required for GSAP and useEffect
 
-const inter = Inter({ subsets: ['latin'] })
+import { Inter } from 'next/font/google';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Background3D from './components/Background3D';
+import BarbaWrapper from './components/BarbaWrapper';
+import ChatButton from './components/ChatBot';
+import { useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import './globals.css';
 
+const inter = Inter({ subsets: ['latin'] });
 
+export const metadata = {
+  title: 'Raj Bhoyar - Portfolio',
+  description:
+    'B.Tech in Computer Science with a passion for building scalable software systems and applying advanced AI/ML technologies.',
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
+  // GSAP smooth scrolling logic
   useEffect(() => {
-    gsap.registerPlugin(ScrollToPlugin)
+    gsap.registerPlugin(ScrollToPlugin);
 
     const handleAnchorClick = (e: MouseEvent) => {
-      const target = e.target as HTMLAnchorElement
+      const target = e.target as HTMLAnchorElement;
       if (target.hash) {
-        e.preventDefault()
+        e.preventDefault();
         gsap.to(window, {
           duration: 1,
           scrollTo: target.hash,
           ease: 'power2.inOut',
-        })
+        });
       }
-    }
+    };
 
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', (e) => handleAnchorClick(e as unknown as MouseEvent))
-    })
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', (e) =>
+        handleAnchorClick(e as unknown as MouseEvent)
+      );
+    });
 
     return () => {
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.removeEventListener('click', (e) => handleAnchorClick(e as unknown as MouseEvent))
-      })
-    }
-  }, [])
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.removeEventListener('click', (e) =>
+          handleAnchorClick(e as unknown as MouseEvent)
+        );
+      });
+    };
+  }, []);
+
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} text-white relative`}>
         <Background3D />
         <div className="relative z-10">
           <Header />
-          {children}
+          <BarbaWrapper>
+            <main data-barba="container" data-barba-namespace="home">
+              {children}
+            </main>
+          </BarbaWrapper>
           <Footer />
         </div>
+        <ChatButton />
       </body>
     </html>
-  )
+  );
 }
-
