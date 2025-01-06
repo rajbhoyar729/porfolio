@@ -1,33 +1,19 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
-import About from './components/About'
-import Skills from './components/Skills'
-import Experience from './components/Experience'
-import Projects from './components/Projects'
-import Contact from './components/Contact'
-import ChatBot from './components/ChatBot'
-import BarbaWrapper from './components/BarbaWrapper'
+import dynamic from 'next/dynamic';
+import About from './components/About';
+import Skills from './components/Skills';
+import Experience from './components/Experience';
+import Projects from './components/Projects';
+import Contact from './components/Contact';
+import ChatBot from './components/ChatBot';
+import BarbaWrapper from './components/BarbaWrapper';
+import ClientWrapper from './components/ClientWrapper';
 
-const Hero = dynamic(() => import('./components/Hero'), { ssr: false })
+// Dynamically import Hero with SSR disabled
+const Hero = dynamic(() => import('./components/Hero'), { ssr: false });
 
 export default function Home() {
-  const [showChatBot, setShowChatBot] = useState(true)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const skillsSection = document.getElementById('skills')
-      if (skillsSection) {
-        const skillsSectionBottom = skillsSection.offsetTop + skillsSection.offsetHeight
-        setShowChatBot(window.scrollY < skillsSectionBottom)
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
   return (
     <main className="relative">
       <Hero />
@@ -38,8 +24,10 @@ export default function Home() {
         <Projects />
       </BarbaWrapper>
       <Contact />
-      {showChatBot && <ChatBot />}
+      {/* Wrap ChatBot with ClientWrapper */}
+      <ClientWrapper>
+        <ChatBot />
+      </ClientWrapper>
     </main>
-  )
+  );
 }
-
