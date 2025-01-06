@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import About from './components/About'
-import Skills from './components/Skills'
-import Experience from './components/Experience'
-import Projects from './components/Projects'
-import Contact from './components/Contact'
-import ChatBot from './components/ChatBot'
-import BarbaWrapper from './components/BarbaWrapper'
+import About from '../components/About'
+import Skills from '../components/Skills'
+import Experience from '../components/Experience'
+import Projects from '../components/Projects'
+import Contact from '../components/Contact'
+import ChatBot from '../components/ChatBot'
+import BarbaWrapper from '../components/BarbaWrapper'
 
-const Hero = dynamic(() => import('./components/Hero'), { ssr: false })
+const Hero = dynamic(() => import('../components/Hero'), { ssr: false })
 
 export default function Home() {
   const [showChatBot, setShowChatBot] = useState(true)

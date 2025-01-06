@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { rateLimiter } from '../../utils/rateLimiter';
+import { rateLimiter } from '../../../utils/rateLimiter';
 
 if (!process.env.GEMINI_API_KEY) {
   throw new Error('Missing Gemini API key');

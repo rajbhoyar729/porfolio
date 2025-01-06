@@ -1,11 +1,11 @@
 'use client'; // Required for GSAP and useEffect
 
 import { Inter } from 'next/font/google';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Background3D from './components/Background3D';
-import BarbaWrapper from './components/BarbaWrapper';
-import ChatButton from './components/ChatBot';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import Background3D from '../components/Background3D';
+import BarbaWrapper from '../components/BarbaWrapper';
+import ChatButton from '../components/ChatBot';
 import { useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
