@@ -1,6 +1,6 @@
-'use client'; // Required for GSAP and useEffect
+'use client';
 
-import { Inter } from 'next/font/google';
+import { Lato } from 'next/font/google';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Background3D from '../components/Background3D';
@@ -11,17 +11,19 @@ import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const lato = Lato({ 
+  subsets: ['latin'],
+  weight: ['100', '300', '400', '700', '900'], // Add the weights you need
+  display: 'swap',
+});
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // GSAP smooth scrolling logic
   useEffect(() => {
     gsap.registerPlugin(ScrollToPlugin);
-
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLAnchorElement;
       if (target.hash) {
@@ -52,7 +54,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} text-white relative`}>
+      <body className={`${lato.className} text-white relative`}>
         <Background3D />
         <div className="relative z-10">
           <Header />
