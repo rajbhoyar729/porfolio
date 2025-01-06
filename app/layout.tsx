@@ -7,17 +7,13 @@ import Background3D from './components/Background3D';
 import BarbaWrapper from './components/BarbaWrapper';
 import ChatButton from './components/ChatBot';
 import { useEffect } from 'react';
+import{metadata} from './metadata';
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata = {
-  title: 'Raj Bhoyar - Portfolio',
-  description:
-    'B.Tech in Computer Science with a passion for building scalable software systems and applying advanced AI/ML technologies.',
-};
 
 export default function RootLayout({
   children,
