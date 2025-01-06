@@ -1,17 +1,31 @@
-'use client';
-
 import dynamic from 'next/dynamic';
 import About from './components/About';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
-import ChatBot from './components/ChatBot';
-import ClientWrapper from './components/ClientWrapper';
 
-// Dynamically import components that use browser APIs
-const Hero = dynamic(() => import('./components/Hero'), { ssr: false });
-const DynamicBarbaWrapper = dynamic(() => import('./components/BarbaWrapper'), { ssr: false });
+const LoadingFallback = () => <div className="animate-pulse">Loading...</div>;
+
+const Hero = dynamic(() => import('./components/Hero'), { 
+  ssr: false,
+  loading: LoadingFallback
+});
+
+const DynamicBarbaWrapper = dynamic(() => import('./components/BarbaWrapper'), { 
+  ssr: false,
+  loading: LoadingFallback
+});
+
+const DynamicChatBot = dynamic(() => import('./components/ChatBot'), { 
+  ssr: false,
+  loading: LoadingFallback
+});
+
+const DynamicClientWrapper = dynamic(() => import('./components/ClientWrapper'), { 
+  ssr: false,
+  loading: LoadingFallback
+});
 
 export default function Home() {
   return (
@@ -23,9 +37,9 @@ export default function Home() {
       <DynamicBarbaWrapper>
         <Projects />
         <Contact />
-        <ClientWrapper>
-          <ChatBot />
-        </ClientWrapper>
+        <DynamicClientWrapper>
+          <DynamicChatBot />
+        </DynamicClientWrapper>
       </DynamicBarbaWrapper>
     </main>
   );
