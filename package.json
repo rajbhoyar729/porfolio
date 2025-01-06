@@ -27,11 +27,12 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",
     "tailwindcss": "3.3.2",
-    "three": "^0.154.0",
     "typescript": "5.1.3"
   },
   "devDependencies": {
     "@barba/core": "^2.10.3",
-    "@types/three": "^0.152.1"
+    "@monogrid/gainmap-js": "^3.1.0",
+    "@types/three": "^0.152.1",
+    "three": "^0.172.0"
   }
 }
